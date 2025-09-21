@@ -2,7 +2,7 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
-  <title>Diretta Live o Ultima Puntata - SPAZIOSMILE</title>
+  <title>Live o Ultima Trasmissione - SPAZIOSMILE</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     body, html {
@@ -18,8 +18,7 @@
     #player-container {
       width: 100%;
       max-width: 800px;
-      height: 400px;
-      position: relative;
+      height: 420px;
     }
     iframe {
       width: 100%;
@@ -35,9 +34,31 @@
 </head>
 <body>
   <div id="player-container">
-    <iframe width="100%" height="400" src="https://player-widget.mixcloud.com/widget/iframe/?feed=%2FSPAZIOSMILE%2F" frameborder="0" allow="encrypted-media; fullscreen; autoplay; idle-detection; speaker-selection; web-share;"></iframe>
+    <iframe 
+      src="https://www.mixcloud.com/widget/iframe/?hide_cover=1&feed=https://www.mixcloud.com/live/SPAZIOSMILE/"
+      allow="autoplay"
+      frameborder="0"
+      ></iframe>
   </div>
+
   <div id="message">Caricamento...</div>
 
+<script>
+  // Fallback semplice: dopo 8 secondi carica ultima puntata se live non parte
+  const playerContainer = document.getElementById('player-container');
+  const message = document.getElementById('message');
+
+  const ultimoEpisodioEmbed = `<iframe 
+      src="https://www.mixcloud.com/widget/iframe/?hide_cover=1&feed=https://www.mixcloud.com/SPAZIOSMILE/ultimo-episodio/"
+      width="100%" height="120" frameborder="0"></iframe>`;
+
+  setTimeout(() => {
+    // In assenza di modo affidabile per testare se live è attivo,
+    // carichiamo fallback ultimo episodio dopo timeout
+    playerContainer.innerHTML = ultimoEpisodioEmbed;
+    message.textContent = "Al momento non siamo in diretta, ecco l'ultima puntata.";
+    message.style.display = "block";
+  }, 8000);
+</script>
 </body>
 </html>
